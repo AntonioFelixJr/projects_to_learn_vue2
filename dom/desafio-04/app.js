@@ -13,7 +13,14 @@ new Vue({
 			width: '500px',
 			height: '250px'
 
-		}
+		},
+		style6: {
+			backgroundColor: 'green',
+			width: '250px',
+			height: '50px'
+
+		},
+		porcento: 0
 	},
 	methods: {
 		iniciarEfeito() {
@@ -23,13 +30,19 @@ new Vue({
 			}, 1000);
 		},
 		iniciarProgresso() {
+			const intervalo = setInterval(() => {
+				this.porcento += 5
 
+				if (this.porcento === 250) {
+					clearInterval(intervalo)
+				} 
+			}, 1000);
 		},
 		mudandoClasse3(event) {
-			return  this.classe3 = event.target.value
+			return this.classe3 = event.target.value
 		},
 		setValido(event) {
-			this.valido = event.target.value == "true"
+			this.valido = event.target.value === 'true'
 				? true : false
 		}
 	},

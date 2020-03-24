@@ -31,7 +31,7 @@
 	<div>
 		<input type="text" v-model="classe4">
 		<input type="text" @input="setValido">
-		<div :class="[classe4,{valido}]"></div>
+		<div :class="valido ? classe4 : ''"></div>
 	</div>
 
 	<!-- 5) Repita 3) mas utilizando estilos ao invés de classes CSS.
@@ -47,7 +47,7 @@
 	<h2>#06</h2>
 	<div>
 		<button @click="iniciarProgresso">Iniciar</button>
-		<div></div>
+		<div :style="[style6, { 'width': porcento + 'px'}]"></div>
 	</div>
 </div>
 <script src="app.js"></script>

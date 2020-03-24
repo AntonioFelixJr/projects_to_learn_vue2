@@ -1,0 +1,23 @@
+{
+  "name": "projects_to_learn_vue2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "http-server": "^0.12.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonioFelixJr/projects_to_learn_vue2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntonioFelixJr/projects_to_learn_vue2/issues"
+  },
+  "homepage": "https://github.com/AntonioFelixJr/projects_to_learn_vue2#readme"
+}
