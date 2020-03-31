@@ -30,13 +30,14 @@ new Vue({
 			}, 1000);
 		},
 		iniciarProgresso() {
+			this.porcento = 0
 			const intervalo = setInterval(() => {
-				this.porcento += 5
+				this.porcento += 1
 
-				if (this.porcento === 250) {
+				if (this.porcento >= 250) {
 					clearInterval(intervalo)
 				} 
-			}, 1000);
+			}, 25);
 		},
 		mudandoClasse3(event) {
 			return this.classe3 = event.target.value
