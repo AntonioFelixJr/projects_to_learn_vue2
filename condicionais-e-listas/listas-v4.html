@@ -1,0 +1,23 @@
+<meta charset="UTF-8">
+<script src="https://unpkg.com/vue"></script>
+
+<style>
+    #cores {
+        list-style: none;
+    }
+</style>
+
+<div id="app">
+    <h3>Iterando numeros</h3>
+    <ul>
+        <li v-for="n, i in 25">index = {{ i }}, valor = {{ n }}</li>
+    </ul>
+</div>
+
+<script>
+
+new Vue({
+    el: '#app',
+    data: {}
+})
+</script>
