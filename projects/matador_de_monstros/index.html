@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="img/favicon.svg">
+  <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  
+  <title>Matador de monstros</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <div id="app">
+
+     <dialog :open="gameOver" class="nes-dialog is-rounded" style="z-index: 3;text-align: center;margin-top: 50px;" id="dialog-rounded" >
+      <form method="dialog">
+        <p class="title">Fim da batalha! <b style="color: gold;">{{ donoTurno.toUpperCase() }}</b> é o vencedor!</p>
+        <div style="margin-bottom: 5px;">
+          <i class="nes-icon coin is-medium"></i>
+          <i class="nes-icon coin is-medium"></i>
+          <i class="nes-icon coin is-medium"></i>
+          <i class="nes-icon trophy is-large"></i>
+          <i class="nes-icon coin is-medium"></i>
+          <i class="nes-icon coin is-medium"></i>
+          <i class="nes-icon coin is-medium"></i>
+        </div>
+          <button class="nes-btn is-primary" style="margin: 0 auto;display:block;">OK!</button>
+      </form>
+    </dialog>
+
+    <div id="vida">
+      <div id="player" class="grid-item pontos-vida">
+        <label for="vida-jogador">Vida Jogador</label>
+        <progress id="vida-jogador" class="nes-progress is-success" 
+          :value="totalPorcento(players[0].vidaAtual, players[0].vidaTotal)" max="100"> 
+          {{ totalPorcento(players[0].vidaAtual, players[0].vidaTotal) }}%
+        </progress>
+        {{ players[0].vidaAtual }}/{{ players[0].vidaTotal }}
+      </div>
+      <div id="monster" class="grid-item pontos-vida">
+        <label for="vida-monstro">Vida Monstro</label>
+        <progress id="vida-monstro" class="nes-progress is-success"
+          :value="totalPorcento(players[1].vidaAtual, players[1].vidaTotal)" max="100">
+          {{ totalPorcento(players[1].vidaAtual, players[1].vidaTotal) }}%
+        </progress>
+        {{ players[1].vidaAtual }}/{{ players[1].vidaTotal }}
+      </div>
+    </div>
+    <div id="acoes">
+      <div class="grid-item" v-if="status">
+        <button type="button" class="nes-btn" @click="ataque()">Ataque</button>
+        <button type="button" class="nes-btn is-warning" @click="ataqueEspecial()">Ataque Especial</button>
+        <button type="button" class="nes-btn is-success" @click="cura()">Cura</button>
+        <button type="button" class="nes-btn is-disabled">Fatality</button>
+      </div>
+      <div class="grid-item" v-else>
+        <button type="button" class="nes-btn is-primary" @click="iniciarJogo()"> INICIAR JOGO!</button>
+      </div>
+    </div>
+    
+    <div id="logs" class="grid-item">
+      <div class="nes-container is-rounded" v-for="log in logList" :style="[{backgroundColor: log.classe}]">
+        <p>{{ log.dono }} <span v-if="log.acao" v-html="log.acao"></span> <span v-html="log.texto">{{ log.texto }}</span></p>
+      </div>
+    </div>
+
+
+    
+  </div>
+  
+  <script src="js/app.js"></script>
+</body>
+
+</html>
