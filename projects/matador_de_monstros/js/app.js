@@ -6,20 +6,23 @@ new Vue ({
         jogadores: ['jogador', 'monstro'],
         donoTurno: "",
         gameOver: false,
+        fataliteOn: false,
         players: [
             {
                 nome: 'jogador',
                 vidaAtual: 240,
                 vidaTotal: 240,
                 ataque: 25,
-                colorLog: "#8bcbe4"
+                colorLog: "#8bcbe4",
+                fatalite: false
             },
             {
                nome: 'monstro',
                vidaAtual: 300,
                vidaTotal: 300,
                ataque: 30,
-               colorLog: "#b9c7c9"
+               colorLog: "#b9c7c9",
+               fatalite: false
             }
         ],
         log: {
@@ -79,14 +82,24 @@ new Vue ({
 
             dano = Math.round(dano)
 
-            if ((playerAlvo.vidaAtual - dano) <= 0) {
+            const vidaRestante = playerAlvo.vidaAtual - dano
+
+            if (vidaRestante <= 0) {
                 playerAlvo.vidaAtual = 0
                 this.addLog("ataque", player.colorLog, playerAlvo.nome, dano, taxaAcerto)
                 this.finalizarJogo()
                 return "Fim de Jogo"
             }
+            else { 
+                if (vidaRestante <= (playerAlvo.vidaTotal / 10)) {
+                    playerAlvo.fatalite = true
+                }
+                else {
+                    playerAlvo.fatalite = false
+                }
+            }
             
-            playerAlvo.vidaAtual = playerAlvo.vidaAtual - dano
+            playerAlvo.vidaAtual = vidaRestante
 
             this.addLog("ataque", player.colorLog, playerAlvo.nome, dano, taxaAcerto)
 
@@ -147,8 +160,11 @@ new Vue ({
             this.mudarTurno()
         },
         mudarTurno() {
+            this.fataliteOn = this.players.find(x => x.nome === this.donoTurno).fatalite
+            console.log(this.fataliteOn+ " fatalite "+this.donoTurno);
             this.donoTurno = this.donoTurno === this.jogadores[0] ?
                 this.jogadores[1] : this.jogadores[0]
+            
             
             this.addLog("inicioTurno")
         },

@@ -7,8 +7,6 @@
   <link rel="icon" href="img/favicon.svg">
   <link href="css/nes.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css">
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> -->
-  
   <title>Matador de monstros</title>
 </head>
 
@@ -56,7 +54,7 @@
         <button type="button" class="nes-btn" @click="ataque()">Ataque</button>
         <button type="button" class="nes-btn is-warning" @click="ataqueEspecial()">Ataque Especial</button>
         <button type="button" class="nes-btn is-success" @click="cura()">Cura</button>
-        <button type="button" class="nes-btn is-disabled">Fatality</button>
+        <button type="button" class="nes-btn" :class="fataliteOn ? 'is-error' : 'is-disabled'">Fatality</button>
       </div>
       <div class="grid-item" v-else>
         <button type="button" class="nes-btn is-primary" @click="iniciarJogo()"> INICIAR JOGO!</button>
