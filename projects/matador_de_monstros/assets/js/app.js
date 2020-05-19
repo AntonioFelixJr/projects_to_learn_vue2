@@ -127,11 +127,21 @@ new Vue ({
                 return
             }
 
-            if ((playerAlvo.vidaAtual - dano) <= 0) {
+            const vidaRestante = playerAlvo.vidaAtual - dano
+
+            if (vidaRestante <= 0) {
                 playerAlvo.vidaAtual = 0
                 this.addLog("ataqueEspecial", player.colorLog, playerAlvo.nome, dano, taxaAcerto)
                 this.finalizarJogo()
                 return "Fim de Jogo"
+            }
+            else { 
+                if (vidaRestante <= (playerAlvo.vidaTotal / 10)) {
+                    playerAlvo.fatalite = true
+                }
+                else {
+                    playerAlvo.fatalite = false
+                }
             }
 
             playerAlvo.vidaAtual = playerAlvo.vidaAtual - dano
@@ -154,6 +164,8 @@ new Vue ({
             else {
                 diferencaVida = vidaGanha
                 player.vidaAtual = player.vidaAtual + vidaGanha
+
+                player.vidaAtual > (player.vidaTotal / 10) ? player.fatalite = false : null
             }
 
             this.addLog("cura", player.colorLog, null, diferencaVida, vidaGanha)
@@ -161,7 +173,6 @@ new Vue ({
         },
         mudarTurno() {
             this.fataliteOn = this.players.find(x => x.nome === this.donoTurno).fatalite
-            console.log(this.fataliteOn+ " fatalite "+this.donoTurno);
             this.donoTurno = this.donoTurno === this.jogadores[0] ?
                 this.jogadores[1] : this.jogadores[0]
             
