@@ -54,7 +54,7 @@
         <button type="button" class="nes-btn" @click="ataque()">Ataque</button>
         <button type="button" class="nes-btn is-warning" @click="ataqueEspecial()">Ataque Especial</button>
         <button type="button" class="nes-btn is-success" @click="cura()">Cura</button>
-        <button type="button" class="nes-btn" :class="fataliteOn ? 'is-error' : 'is-disabled'">Fatality</button>
+        <button type="button" class="nes-btn" :class="fatalityOn ? 'is-error' : 'is-disabled'" @click="fatality()">Fatality</button>
       </div>
       <div class="grid-item" v-else>
         <button type="button" class="nes-btn is-primary" @click="iniciarJogo()"> INICIAR JOGO!</button>

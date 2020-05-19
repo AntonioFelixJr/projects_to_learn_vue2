@@ -6,7 +6,7 @@ new Vue ({
         jogadores: ['jogador', 'monstro'],
         donoTurno: "",
         gameOver: false,
-        fataliteOn: false,
+        fatalityOn: false,
         players: [
             {
                 nome: 'jogador',
@@ -14,7 +14,7 @@ new Vue ({
                 vidaTotal: 240,
                 ataque: 25,
                 colorLog: "#8bcbe4",
-                fatalite: false
+                fatality: false
             },
             {
                nome: 'monstro',
@@ -22,7 +22,7 @@ new Vue ({
                vidaTotal: 300,
                ataque: 30,
                colorLog: "#b9c7c9",
-               fatalite: false
+               fatality: false
             }
         ],
         log: {
@@ -41,9 +41,12 @@ new Vue ({
         iniciarJogo() {
             this.status = true
             this.gameOver = false
+            this.fatalityOn = false
             this.donoTurno = this.jogadores[0]
             this.logList = []
-            this.players[0].vidaAtual = this.players[0].vidaTotal 
+            this.players[0].vidaAtual = this.players[0].vidaTotal
+            this.players[0].fatality = false
+            this.players[1].fatality = false
             this.players[1].vidaAtual = this.players[1].vidaTotal 
             
             this.addLog("inicio")
@@ -92,10 +95,10 @@ new Vue ({
             }
             else { 
                 if (vidaRestante <= (playerAlvo.vidaTotal / 10)) {
-                    playerAlvo.fatalite = true
+                    playerAlvo.fatality = true
                 }
                 else {
-                    playerAlvo.fatalite = false
+                    playerAlvo.fatality = false
                 }
             }
             
@@ -137,10 +140,10 @@ new Vue ({
             }
             else { 
                 if (vidaRestante <= (playerAlvo.vidaTotal / 10)) {
-                    playerAlvo.fatalite = true
+                    playerAlvo.fatality = true
                 }
                 else {
-                    playerAlvo.fatalite = false
+                    playerAlvo.fatality = false
                 }
             }
 
@@ -165,14 +168,38 @@ new Vue ({
                 diferencaVida = vidaGanha
                 player.vidaAtual = player.vidaAtual + vidaGanha
 
-                player.vidaAtual > (player.vidaTotal / 10) ? player.fatalite = false : null
+                player.vidaAtual > (player.vidaTotal / 10) ? player.fatality = false : null
             }
 
             this.addLog("cura", player.colorLog, null, diferencaVida, vidaGanha)
             this.mudarTurno()
         },
+        fatality() {
+            const player = this.players.find(x => x.nome === this.donoTurno)            
+
+            const playerAlvoNome = this.donoTurno === this.jogadores[0] ?
+                this.jogadores[1] : this.jogadores[0]
+
+            const playerAlvo = this.players.find(x => x.nome === playerAlvoNome)
+
+            if (playerAlvo.fatality) {
+                this.addLog("fatality", 'red', playerAlvo.nome)
+                this.tocarSom('assets/sounds/fatality.mp3');
+                playerAlvo.vidaAtual = 0
+                this.finalizarJogo()
+            }
+        },
+        tocarSom (src) {
+            if(src) {
+              const audio = new Audio(src)
+              audio.play()
+            }
+        },
         mudarTurno() {
-            this.fataliteOn = this.players.find(x => x.nome === this.donoTurno).fatalite
+            this.fatalityOn = this.players.find(x => x.nome === this.donoTurno).fatality
+            if (this.fatalityOn) {
+                this.tocarSom('assets/sounds/finish-him.mp3')
+            }
             this.donoTurno = this.donoTurno === this.jogadores[0] ?
                 this.jogadores[1] : this.jogadores[0]
             
@@ -251,6 +278,16 @@ new Vue ({
                         texto: `<b style='color: #7aa328'> + ${dano}PV (PV LUCKY ${taxaAcerto})</b>`
                     })
                     break
+
+                case "fatality":
+                    this.logList.unshift({ 
+                        dono: this.donoTurno.toUpperCase(), 
+                        acao: "<b style='color: #FFAAAA'>usou FATALITY!</b>", 
+                        classe: colorLog, 
+                        texto: `<b style='color: #FFAAAA'> ${playerAlvoNome.toUpperCase()} foi finalizado!</b>`
+                    })
+                    break
+
                 default:
                     break
             }

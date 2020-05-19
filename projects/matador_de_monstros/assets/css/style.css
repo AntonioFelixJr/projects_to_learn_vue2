@@ -58,3 +58,10 @@ body {
     font-size: 14px;
     text-align: center;
 }
+
+@media(max-width: 535px) {
+    dialog i:nth-child(1), 
+    dialog i:nth-last-child(1){
+        display: none;
+    }
+}
