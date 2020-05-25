@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue"></script>
+    <title>Instancia Externa</title>
+</head>
+<body>
+    <div id="app1">
+
+        {{ titulo1 }}
+        
+        <button @click="alterar">Alterar!</button>
+        
+    </div>
+
+    <div id="app2">
+        
+        {{ titulo2 }}
+        
+        <button @click="alterar">Alterar!</button>
+
+    </div>
+
+    <script>
+        const vm1 = new Vue({
+            el: "#app1",
+            data: {
+                titulo1: 'Instancia APP1'
+            },
+            methods: {
+                alterar() {
+                    vm2.titulo2 += "???"
+                }
+            }
+        })
+
+        const vm2 = new Vue({
+            el: "#app2",
+            data: {
+                titulo2: 'Instancia APP2'
+            },
+            methods: {
+                alterar() {
+                    vm1.titulo1 += "!!!!"
+                }
+            }
+        })
+
+        setTimeout(() => {
+            vm1.titulo1 = 'Titulo alterado externamente...'
+        }, 3000);
+    </script>
+</body>
+</html>

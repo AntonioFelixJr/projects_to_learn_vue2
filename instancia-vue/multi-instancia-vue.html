@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue"></script>
+    <title>Multi instancia</title>
+</head>
+<body>
+    <div id="app1">
+
+        {{ titulo1 }}
+        
+        <button @click="alterar">Alterar!</button>
+        
+    </div>
+
+    <div id="app2">
+        
+        {{ titulo2 }}
+        
+        <button @click="alterar">Alterar!</button>
+
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app1",
+            data: {
+                titulo1: 'Instancia APP1'
+            },
+            methods: {
+                alterar() {
+                    this.titulo1 += "!!!"
+                }
+            }
+        })
+
+        new Vue({
+            el: "#app2",
+            data: {
+                titulo2: 'Instancia APP2'
+            },
+            methods: {
+                alterar() {
+                    this.titulo2 += "!!!"
+                }
+            }
+        })
+    </script>
+</body>
+</html>

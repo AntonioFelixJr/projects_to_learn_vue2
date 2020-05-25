@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue"></script>
+    <title>Instancia Gerenciamento de dados</title>
+</head>
+<body>
+    <div id="app">
+
+        {{ titulo }} {{ novaInfo }}
+        
+        <button @click="alterar">Alterar!</button>
+        
+    </div>
+
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                titulo: 'Instancia APP'
+            },
+            methods: {
+                alterar() {
+                    this.titulo += "!"
+                }
+            }
+        })
+
+        vm.novaInfo = 'TESTE'
+        console.log(vm.novaInfo)
+    </script>
+</body>
+</html>
