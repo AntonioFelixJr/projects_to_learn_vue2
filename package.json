@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "http-server": "^0.12.1",
+    "http-server": "^0.12.3",
     "minimist": ">=1.2.2",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.4"
   },
   "devDependencies": {},
   "scripts": {
