@@ -3,7 +3,7 @@
     <h1 class="task-grid-title">{{ title }}</h1>
     <hr>
     <div id="task-grid-container">
-        <Task v-for="task in tasksFilter" :key="task.name" :task="task" />
+        <Task v-for="task in tasksFilter" :key="task.name" :task="task" @task-deleted="$emit('task-deleted', $event)" />
         <p v-if="tasksFilter.length === 0">
             Sem tarefas
         </p>
@@ -30,11 +30,9 @@ export default {
     methods: {
         onDrop (evt) {
             const itemID = evt.dataTransfer.getData("itemID")
-            const item = this.tasks.find(item => {
+            this.tasks.find(item => {
                 if (item.name == itemID) item.category = this.title
             })
-
-            console.log(this.tasks)
         }
     },
     computed: {
@@ -54,10 +52,16 @@ export default {
 
     .task-grid-title {
         text-align: center;
+        user-select: none;
     }
 
     #task-grid-container p {
         font-size: 24px;
+        user-select: none;
+    }
+
+    hr {
+        user-select: none;
     }
 
 </style>

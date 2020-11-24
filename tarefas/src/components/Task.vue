@@ -1,6 +1,7 @@
 <template>
   <div class="task" :class="stateClass" @click="changeState" draggable="true" 
     @dragstart="startDrag($event, task.name)">
+    <span @click.stop="$emit('task-deleted', task)" class="close">x</span>
       {{ task.name }}
   </div>
 </template>
@@ -21,13 +22,6 @@ export default {
             evt.dataTransfer.dropEffect = 'move'
             evt.dataTransfer.effectAllowed = 'move'
             evt.dataTransfer.setData('itemID', item)
-        },
-        onDrop(evt) {
-
-            // const indexItem = this.tasks.indexOf(item)
-            // this.dropezoneTasks.push(item)
-            // this.tasks.splice(indexItem, 1)
-            console.log(this.tasks)
         }
     },
     computed: {
@@ -43,6 +37,7 @@ export default {
 
 <style>
     .task {
+        position: relative;
         box-sizing: border-box;
         width: 350px;
         height: 150px;
@@ -69,4 +64,25 @@ export default {
         border-left: 12px solid #B73229;
         background-color: #F44336;
     }
+
+    div .task.pending .close {
+        background-color: #B73229;
+    }
+
+    div .task.done .close {
+        background-color: #0A8F08;
+    }
+
+    .close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
 </style>
